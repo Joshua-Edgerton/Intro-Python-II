@@ -1,6 +1,13 @@
 from room import Room
 
 # Small change for git PR
+# REPL
+
+deaths = 0
+level = 0
+exp = 0
+
+choices = ['w', 'a', 's', 'd']
 
 # Declare all the rooms
 
@@ -40,6 +47,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+player = Player('Newb', room['outside'])
 
 # Write a loop that:
 #
