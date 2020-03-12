@@ -88,6 +88,10 @@ while True:
                 player.current_room = player.current_room.__dict__[
                     attrib]
                 print(player)
+                exp = exp + 20
+                if exp > 99:
+                    exp = 0
+                    level = level + 1
 
         else:
             print('Invalid input. Please try again.\n')
