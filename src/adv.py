@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 import os
+os.system("cls")
 
 # Small change for git PR
 # REPL
@@ -49,16 +50,11 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
-player = Player('Newb', room['outside'])
-
-for r in room:
-    print(r)
-
-print(player.current_room.name)
+player_name = input("Type in your characters name: ")
+player = Player(player_name, room['outside'])
 
 # Write a loop that:
-#
+#a
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -70,7 +66,8 @@ print(player.current_room.name)
 
 while True:
     #print
-    print(f"\n Deaths: {deaths} \n EXP: {exp}/100 \n Level: {level} \n Current Location:", player.current_room.name, "\n \n ")
+    print(f"\n\u001b[31mDeaths: {deaths} \n\u001b[34mEXP: {exp}/100 \n\u001b[32mLevel: {level}\u001b[37m")
+    print(player)
     #read
     cmd = input("Choose a Direction to Travel: ")
     #evaluate
@@ -85,7 +82,7 @@ while True:
                 print(
                     "\nYou've chosen a fatal direction and must start over")
                 deaths = deaths + 1
-                player = Player('Newb', room['outside']) 
+                player = Player(player_name, room['outside']) 
 # * Prints the current room name
             else:
                 player.current_room = player.current_room.__dict__[
@@ -96,9 +93,3 @@ while True:
             print('Invalid input. Please try again.\n')
     except ValueError:
         print('Invalid input.\n')
-
-
-
-
-            # player = Player('Newb', room['outside'].n_to)
-            # print("You went north to", player.room.name)

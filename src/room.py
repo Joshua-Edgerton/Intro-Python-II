@@ -11,4 +11,4 @@ class Room:
         self.w_to = None
 
     def __str__(self):
-        return (f"{self.name}\n{self.description}")
+        return (f"\u001b[35m{self.name}\n\u001b[36m{self.description}\u001b[37m \n")

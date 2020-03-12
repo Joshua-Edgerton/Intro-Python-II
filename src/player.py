@@ -10,4 +10,4 @@ class Player:
         self.stash = []
 
     def __str__(self):
-        return f'{self.name} is located {self.current_room}'
+        return f'\u001b[33m\n{self.name} is located in the {self.current_room}'
