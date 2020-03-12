@@ -110,18 +110,22 @@ while True:
             else:
                 print(player.stash)
             roomitems = []
+            stashitems = []
+            if player.stash:
+                for i in player.stash:
+                    stashitems.append(i)
             if player.current_room.items:
                 for i in player.current_room.items:
                     roomitems.append(i.name)
             else:
                 roomitems = "[No items in room]"
-            select = input("Inventory Controls:\n [b] Back\n [p] Pickup Items in room " + str(roomitems) + "\n")
+            select = input("Inventory Controls:\n [b] Back\n [p] Pickup Items in room: " + str(roomitems) + "\n [d] Drop Items here "  + str(stashitems) + "\n")
 
             if select == "b":
                 pass
-            if select == "p":
+            elif select == "p":
                 for i in roomitems:
-                    confirm = input("Are you sure you wish to pick up " + str(i) + "? [y] [n] :")
+                    confirm = input("Are you sure you wish to pick up " + str(i) + "? [y] [n] : ")
                     if confirm == "y":
                         player.stash.append(i)
                         print("You've acquired " + i + "!!")
@@ -137,7 +141,19 @@ while True:
                         elif player.current_room.items[3].name == i:
                             del player.current_room.items[3]
                             print("\nRemoved " + str(i) + " from " + str(player.current_room.name) + "")
-
+            elif select == "d":
+                for i in player.stash:
+                    dropchoice = input("Are you sure you want to drop " + i + " in " + "? y/n : ")
+                    if dropchoice == "y":
+                        player.current_room.set_items([Item(i, "Dropped item")])
+                        player.stash.remove(i)
+                    elif dropchoice == "n":
+                        print("Declined to drop " + i)
+                    else:
+                        print("Invalid input")
+                        pass
+            else:
+                pass 
         else:
             print('Invalid input. Please try again.\n')
     except ValueError:
