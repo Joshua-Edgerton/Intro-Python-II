@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import os
 os.system("cls")
 
@@ -80,7 +81,7 @@ while True:
 
             if player.current_room.__dict__[attrib] == None:
                 print(
-                    "\nYou've chosen a fatal direction and must start over")
+                    "\n\u001b[31m !!!! You've chosen a fatal direction and have respawned at the entrance !!!!")
                 deaths = deaths + 1
                 player = Player(player_name, room['outside']) 
 # * Prints the current room name
@@ -90,7 +91,8 @@ while True:
                 print(player)
                 exp = exp + 20
                 if exp > 99:
-                    exp = 0
+                    remaining_exp = exp - 100
+                    exp = remaining_exp
                     level = level + 1
 
         else:
