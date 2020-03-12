@@ -71,6 +71,9 @@ player = Player(player_name, room['outside'], 100, 200, 100, 1)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+item1used = False
+item2used = False
+item3used = False
 
 while True:
     #print
@@ -79,14 +82,21 @@ while True:
     #read
     cmd = input("Directional Controls: \u001b[34m[n] [s] [e] [w]\u001b[37m \nOpen Item Menu: \u001b[34m[i]\u001b[37m\nCharacter Stats: \u001b[34m[c]\u001b[37m\n\u001b[33mInput : \u001b[37m")
     #Item effects
+
     if "Orb of Experience" in str(player.stash):
         player.multiplier = 2
     if "Book of code skills" in str(player.stash):
-        player.awesomeness = player.awesomeness + 50
+        if item1used == False:
+            player.awesomeness = player.awesomeness + 50
+            item1used = True
     if "Mana vial" in str(player.stash):
-        player.mana = player.mana + 30
+        if item2used == False:
+            player.mana = player.mana + 30
+            item2used = True
     if "Health vial" in str(player.stash):
-        player.health = player.health + 25
+        if item3used == False:
+            player.health = player.health + 25
+            item3used = True
     #Evaluate
     try:
         if cmd == "q":
