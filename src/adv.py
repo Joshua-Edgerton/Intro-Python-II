@@ -1,10 +1,13 @@
 from room import Room
 from player import Player
 from item import Item
-import os
+import os, sys
 os.system("cls")
 
 # Small change for git PR
+
+sys.path.append("/items")
+
 # REPL
 
 deaths = 0
@@ -38,6 +41,7 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
+room["outside"].set_items([Item("Orb of Experience", "Grants double EXP")])
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
