@@ -125,6 +125,18 @@ while True:
                     if confirm == "y":
                         player.stash.append(i)
                         print("You've acquired " + i + "!!")
+                        if player.current_room.items[0].name == i:
+                            del player.current_room.items[0]
+                            print("\nRemoved " + str(i) + " from " + str(player.current_room.name) + "")
+                        elif player.current_room.items[1].name == i:
+                            del player.current_room.items[1]
+                            print("\nRemoved " + str(i) + " from " + str(player.current_room.name) + "")
+                        elif player.current_room.items[2].name == i:
+                            del player.current_room.items[2]
+                            print("\nRemoved " + str(i) + " from " + str(player.current_room.name) + "")
+                        elif player.current_room.items[3].name == i:
+                            del player.current_room.items[3]
+                            print("\nRemoved " + str(i) + " from " + str(player.current_room.name) + "")
 
         else:
             print('Invalid input. Please try again.\n')
