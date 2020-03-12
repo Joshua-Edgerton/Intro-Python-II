@@ -1,6 +1,5 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
-import textwrap
 
 class Room:
     def __init__(self, name, description):
@@ -30,8 +29,8 @@ class Room:
                 for item in self.items:
                     item_list += item.name + " - " + item.description
 
-                return f"\n\u001b[35m{self.name}\n\u001b[36m{self.description}\u001b[37m \n{item_list}\n"
+                return f"\u001b[35m{self.name}\n\u001b[36m{self.description}\u001b[37m \n{item_list}\n"
 #Experimental item code /\
 
         else:
-            return (f"\n\u001b[35m{self.name}\n\u001b[36m{self.description}\u001b[37m \n")
+            return (f"\u001b[35m{self.name}\n\u001b[36m{self.description}\u001b[37m \n")

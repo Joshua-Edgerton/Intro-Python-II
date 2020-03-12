@@ -41,8 +41,8 @@ earlier adventurers. The only exit is to the south."""),
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
-room["outside"].set_items([Item("Orb of Experience", "Grants double EXP")])
 room['foyer'].s_to = room['outside']
+room["foyer"].set_items([Item("Orb of Experience", "Grants double EXP")])
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
@@ -74,14 +74,16 @@ while True:
     print(f"\n\u001b[31mDeaths: {deaths} \n\u001b[34mEXP: {exp}/100 \n\u001b[32mLevel: {level}\u001b[37m")
     print(player)
     #read
-    cmd = input("Choose a Direction to Travel: ")
+    cmd = input("Directional Controls: [n] [s] [e] [w] \nOpen Item Menu: [i]\nInput: ")
     #evaluate
     try:
         if cmd == "q":
             print("Goodbye!")
             break
+
         if cmd == 'n' or cmd == 'e' or cmd == 's' or cmd == 'w':
             attrib = f'{cmd}_to'
+            print(str(player.stash) + "player stash here")
 
             if player.current_room.__dict__[attrib] == None:
                 print(
@@ -93,11 +95,36 @@ while True:
                 player.current_room = player.current_room.__dict__[
                     attrib]
                 print(player)
-                exp = exp + 20
+                if "Orb of Experience" in str(player.stash):
+                    multiplier = 2
+                else:
+                    multiplier = 1
+                exp = exp + 20 * multiplier
                 if exp > 99:
                     remaining_exp = exp - 100
                     exp = remaining_exp
                     level = level + 1
+        elif cmd == "i":
+            if player.stash == []:
+                print("\n\u001b[31mNo items in inventory\u001b[37m")
+            else:
+                print(player.stash)
+            roomitems = []
+            if player.current_room.items:
+                for i in player.current_room.items:
+                    roomitems.append(i.name)
+            else:
+                roomitems = "[No items in room]"
+            select = input("Inventory Controls:\n [b] Back\n [p] Pickup Items in room " + str(roomitems) + "\n")
+
+            if select == "b":
+                pass
+            if select == "p":
+                for i in roomitems:
+                    confirm = input("Are you sure you wish to pick up " + str(i) + "? [y] [n] :")
+                    if confirm == "y":
+                        player.stash.append(i)
+                        print("You've acquired " + i + "!!")
 
         else:
             print('Invalid input. Please try again.\n')
