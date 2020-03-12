@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import os
 
 # Small change for git PR
 # REPL
@@ -7,7 +9,7 @@ deaths = 0
 level = 0
 exp = 0
 
-choices = ['w', 'a', 's', 'd']
+choices = ['n', 's', 'e', 'w']
 
 # Declare all the rooms
 
@@ -50,6 +52,11 @@ room['treasure'].s_to = room['narrow']
 
 player = Player('Newb', room['outside'])
 
+for r in room:
+    print(r)
+
+print(player.current_room.name)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -60,3 +67,38 @@ player = Player('Newb', room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    #print
+    print(f"\n Deaths: {deaths} \n EXP: {exp}/100 \n Level: {level} \n Current Location:", player.current_room.name, "\n \n ")
+    #read
+    cmd = input("Choose a Direction to Travel: ")
+    #evaluate
+    try:
+        if cmd == "q":
+            print("Goodbye!")
+            break
+        if cmd == 'n' or cmd == 'e' or cmd == 's' or cmd == 'w':
+            attrib = f'{cmd}_to'
+
+            if player.current_room.__dict__[attrib] == None:
+                print(
+                    "\nYou've chosen a fatal direction and must start over")
+                deaths = deaths + 1
+                player = Player('Newb', room['outside']) 
+# * Prints the current room name
+            else:
+                player.current_room = player.current_room.__dict__[
+                    attrib]
+                print(player)
+
+        else:
+            print('Invalid input. Please try again.\n')
+    except ValueError:
+        print('Invalid input.\n')
+
+
+
+
+            # player = Player('Newb', room['outside'].n_to)
+            # print("You went north to", player.room.name)
