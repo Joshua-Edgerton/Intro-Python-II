@@ -56,7 +56,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("Type in your characters name: ")
-player = Player(player_name, room['outside'])
+player = Player(player_name, room['outside'], 100, 200, 100)
 
 # Write a loop that:
 #a
@@ -74,7 +74,7 @@ while True:
     print(f"\n\u001b[31mDeaths: {deaths} \n\u001b[34mEXP: {exp}/100 \n\u001b[32mLevel: {level}\u001b[37m")
     print(player)
     #read
-    cmd = input("Directional Controls: [n] [s] [e] [w] \nOpen Item Menu: [i]\nInput: ")
+    cmd = input("Directional Controls: [n] [s] [e] [w] \nOpen Item Menu: [i]\nCharacter Stats: [c]\nInput: ")
     #evaluate
     try:
         if cmd == "q":
@@ -87,9 +87,9 @@ while True:
 
             if player.current_room.__dict__[attrib] == None:
                 print(
-                    "\n\u001b[31m !!!! You've chosen a fatal direction and have respawned at the entrance !!!!")
+                    "\n\u001b[31m !!!! You've chosen a fatal direction and have respawned at the entrance !!!!\n You will still keep your items")
                 deaths = deaths + 1
-                player = Player(player_name, room['outside']) 
+                player = Player(player_name, room['outside'], 100, 100, 100) 
 # * Prints the current room name
             else:
                 player.current_room = player.current_room.__dict__[
@@ -99,11 +99,21 @@ while True:
                     multiplier = 2
                 else:
                     multiplier = 1
-                exp = exp + 20 * multiplier
+                exp = exp + 10 * multiplier
                 if exp > 99:
                     remaining_exp = exp - 100
                     exp = remaining_exp
                     level = level + 1
+                    talents = input("You leveled up! Choose a bonus! \n[h] Health\n[m] Mana\n[a] Awesomeness\nInput : ")
+                    if talents == "h":
+                        player.health = player.health + 15
+                        print("\nPlayer health has increased to " + str(player.health) + "!!")
+                    elif talents == "m":
+                        player.mana = player.mana + 20
+                        print("\nPlayer mana has increased to " + str(player.mana) + "!!")
+                    elif talents == "a":
+                        player.awesomeness = player.awesomeness + 50
+                        print("\nPlayer awesomeness has increased to " + str(player.awesomeness) + "!!")
         elif cmd == "i":
             if player.stash == []:
                 print("\n\u001b[31mNo items in inventory\u001b[37m")
@@ -114,12 +124,14 @@ while True:
             if player.stash:
                 for i in player.stash:
                     stashitems.append(i)
+            else:
+                stashitems = "[No items in inventory]"
             if player.current_room.items:
                 for i in player.current_room.items:
                     roomitems.append(i.name)
             else:
                 roomitems = "[No items in room]"
-            select = input("Inventory Controls:\n [b] Back\n [p] Pickup Items in room: " + str(roomitems) + "\n [d] Drop Items here "  + str(stashitems) + "\n")
+            select = input("Inventory Controls:\n [b] Back\n [p] Pickup Items in room: " + str(roomitems) + "\n [d] Drop Items here: "  + str(stashitems) + "\nInput : ")
 
             if select == "b":
                 pass
@@ -153,7 +165,17 @@ while True:
                         print("Invalid input")
                         pass
             else:
-                pass 
+                pass
+        elif cmd == "c":
+            print("\nHere you can view your character stats\n")
+            print("Health: ", player.health, "")
+            print("Mana: ", player.mana, "")
+            print("Awesomeness: ", player.awesomeness, "")
+            back = input("\nPress [b] to go back\nInput : ")
+            if back == "b":
+                pass
+            else:
+                print("Invalid input")
         else:
             print('Invalid input. Please try again.\n')
     except ValueError:
